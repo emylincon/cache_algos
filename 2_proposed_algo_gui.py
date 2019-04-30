@@ -9,6 +9,7 @@ from time import gmtime, strftime
 import random
 import time
 import psutil
+from drawnow import *
 import ping_code as pc
 from threading import Thread
 from matplotlib import pyplot as plt
@@ -38,6 +39,13 @@ window_size = cache_size * 8
 
 x_axis = []
 y_axis = []
+
+fig = plt.figure()
+ax1 = fig.add_subplot(331)
+ax2 = fig.add_subplot(332)
+ax3 = fig.add_subplot(333)
+ax4 = fig.add_subplot(334)
+ax5 = fig.add_subplot(313)
 
 
 def make_hash_dic(host_ip, n):
