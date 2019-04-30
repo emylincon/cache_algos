@@ -42,6 +42,7 @@ ax3 = fig.add_subplot(234)
 ax4 = fig.add_subplot(236)
 ax5 = fig.add_subplot(132)
 
+
 def make_hash_dic(host_ip, n):
     h_dic = {}   # {url: hash}
     kolour = ['r', 'g', 'c', 'k', 'b', 'm', 'y']
