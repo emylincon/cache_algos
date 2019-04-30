@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from drawnow import *
 import random as r
-
+import time
 
 fig = plt.figure()
 ax1 = fig.add_subplot(331)
@@ -82,6 +82,7 @@ def plot_test():
 def draw_loop():
     while True:
         drawnow(plot_test)
+        time.sleep(3)
 
 
 draw_loop()
