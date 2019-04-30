@@ -24,31 +24,31 @@ def plt1():
 def plt2():
     x = list(range(10, 30))
     y = [r.randint(i) for i in x]
-    ax1.grid(True, color='k')
-    ax1.plot(x, y, linewidth=5, color='c')
-    ax1.set_title('plt1')
-    ax1.legend()
-    plt.subplot(ax1)
+    ax2.grid(True, color='k')
+    ax2.plot(x, y, linewidth=5, color='c')
+    ax2.set_title('plt1')
+    ax2.legend()
+    plt.subplot(ax2)
 
 
 def plt3():
     x = list(range(10, 30))
     y = [r.randint(i) for i in x]
-    ax1.grid(True, color='k')
-    ax1.plot(x, y, linewidth=5, color='m')
-    ax1.set_title('plt1')
-    ax1.legend()
-    plt.subplot(ax1)
+    ax3.grid(True, color='k')
+    ax3.plot(x, y, linewidth=5, color='m')
+    ax3.set_title('plt1')
+    ax3.legend()
+    plt.subplot(ax3)
 
 
 def plt4():
     x = list(range(10, 30))
     y = [r.randint(i) for i in x]
-    ax1.grid(True, color='k')
-    ax1.plot(x, y, linewidth=5, color='k')
-    ax1.set_title('plt1')
-    ax1.legend()
-    plt.subplot(ax1)
+    ax4.grid(True, color='k')
+    ax4.plot(x, y, linewidth=5, color='k')
+    ax4.set_title('plt1')
+    ax4.legend()
+    plt.subplot(ax4)
 
 
 def plt5():
@@ -63,3 +63,23 @@ def plt5():
     cols = ['r', 'g', 'c', 'k', 'b', 'm', 'y']
     ax5.pie(val, labels=keys, autopct='%.3f%%', shadow=True, explode=explode, colors=cols)
     ax5.set_title('Relative Frequency')
+
+
+def plot_test():
+    global mem
+    global store
+    global cpu
+
+    try:
+        plot_cpu()
+        plot_mem()
+        plot_storage()
+        plot_net()
+        fig.suptitle('Resource Utilization (CPU|MEMORY|STORAGE|NETWORK)')
+    except Exception as e:
+        print(e)
+
+
+def draw_loop():
+    while True:
+        drawnow(plot_resource_util)
