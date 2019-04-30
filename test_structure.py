@@ -1,0 +1,6 @@
+fig = plt.figure()
+ax1 = fig.add_subplot(331)
+ax2 = fig.add_subplot(332)
+ax3 = fig.add_subplot(333)
+ax4 = fig.add_subplot(334)
+ax5 = fig.add_subplot(313)
