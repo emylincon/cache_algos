@@ -52,7 +52,8 @@ def plt4():
 
 
 def plt5():
-    val = [2, 4, 6, 10, 1, 0.5, 15]
+    x = list(range(51, 58))
+    val = [r.randint(i) for i in x]
     explode = []
     for v in val:
         if v == max(val):
@@ -66,20 +67,22 @@ def plt5():
 
 
 def plot_test():
-    global mem
-    global store
-    global cpu
 
     try:
-        plot_cpu()
-        plot_mem()
-        plot_storage()
-        plot_net()
-        fig.suptitle('Resource Utilization (CPU|MEMORY|STORAGE|NETWORK)')
+        plt1()
+        plt2()
+        plt3()
+        plt4()
+        plt5()
+        fig.suptitle('Testing subplot')
     except Exception as e:
         print(e)
 
 
 def draw_loop():
     while True:
-        drawnow(plot_resource_util)
+        drawnow(plot_test)
+
+
+if __name__ == "__main__":
+    draw_loop()
