@@ -64,22 +64,14 @@ def plot_performance():
     global MH
     global re_use
 
-    fig5 = plt.figure('Cache Performance')
-
-    fig5 = plt.clf()
-
-    fig5 = plt.ion()
     name = ['Hits', 'Misses', 'Co-operative-Hits', 'Algo use']
     ypos = ([0, 1, 2, 3])
     values = [H, M, (H + MH), re_use]
-
-    fig5 = plt.xticks(ypos, name)
-    fig5 = plt.bar(ypos, values, align='center', color='m')
-    fig5 = plt.title('Cache Performance')
-
-    fig5 = plt.ylabel('values')
-
-    fig5 = plt.pause(2)
+    ax1.set_xticks(ypos)
+    ax1.set_xticklabels(name)
+    ax1.bar(ypos, values, align='center', color='m')
+    ax1.set_title('Cache Performance')
+    plt.subplot(ax1)
 
 
 def update_changing_freq():
@@ -104,19 +96,15 @@ def plot_changing_freq():
             rf = changing_freq[hash_dic[key]]
             plot_dic[key] = rf  # converts the dictionary from hash: frequency to web: frequency
 
-    fig3 = plt.figure('Moving Relative Frequency')
-
-    fig3 = plt.clf()
-    fig3 = plt.ion()
-    fig3 = plt.grid(True, color='k')
+    ax2.grid(True, color='k')
     for key in plot_dic.keys():
-        fig3 = plt.plot(plot_dic[key], linewidth=5, label=key, color=colour[key])
+        ax2.plot(plot_dic[key], linewidth=5, label=key, color=colour[key])
 
-    fig3 = plt.title('Changing frequency Graph')
-    fig3 = plt.ylabel('URL')
-    fig3 = plt.xlabel('Time (seconds)')
-    fig3 = plt.legend()
-    fig3 = plt.pause(2)
+    ax2.set_title('Changing frequency Graph')
+    ax2.set_ylabel('URL')
+    ax2.set_xlabel('Time (seconds)')
+    ax2.legend()
+    plt.subplot(ax2)
 
 
 def local_cache_frequency():
@@ -168,23 +156,19 @@ def plot_local_cache_freq():
             rf = changing_freq[hash_dic[key]]
             plot_dic[key] = rf  # converts the dictionary from hash: frequency to web: frequency
 
-    fig4 = plt.figure('Local Cache Frequency')
-
-    fig4 = plt.clf()
-    fig4 = plt.ion()
-    fig4 = plt.grid(True, color='k')
+    ax3.grid(True, color='k')
     if local_cache_frequency() == 'no items':
         pass
     else:
         for key in plot_dic.keys():
             if key in local_cache_frequency():
-                fig4 = plt.plot(plot_dic[key], linewidth=5, label=key, color=colour[key])
+                ax3.plot(plot_dic[key], linewidth=5, label=key, color=colour[key])
 
-            fig4 = plt.title('Local Cache frequency Graph')
-            fig4 = plt.ylabel('URL')
-            fig4 = plt.xlabel('Time (seconds)')
-            fig4 = plt.legend()
-            fig4 = plt.pause(2)
+            ax3.set_title('Local Cache frequency Graph')
+            ax3.set_ylabel('URL')
+            ax3.set_xlabel('Time (seconds)')
+            ax3.legend()
+            plt.subplot(ax3)
 
 
 def hash_to_web():
@@ -210,9 +194,9 @@ def plot_graphs():
     delta = abs(prev_t - next_t)
     prev_t = next_t
     plot_resource_util(rtt, delta)
-    # plot_relative_frequency()
-    # plot_changing_freq()
-    # plot_local_cache_freq()
+    plot_relative_frequency()
+    plot_changing_freq()
+    plot_local_cache_freq()
     plot_performance()
     plt.show()
 
@@ -230,22 +214,16 @@ def calculate_mov_avg(a1):
 
 
 def plot_resource_util(x, y):
-    fig1 = plt.figure('Resource Utilization')
-
-    fig1 = plt.clf()
     x_axis.append(x)
     y_axis.append(y)
-    fig1 = plt.ion()
-    fig1 = plt.grid(True, color='k')
-    fig1 = plt.plot(calculate_mov_avg(x_axis), linewidth=5, label='RTT')
-    fig1 = plt.plot(calculate_mov_avg(y_axis), linewidth=5, label='CPU')
-    fig1 = plt.title('CPU and RTT Utilization over Time')
-    fig1 = plt.ylabel('CPU and RTT')
-    fig1 = plt.xlabel('Time (seconds)')
-    fig1 = plt.legend()
-    fig1 = plt.pause(2)
-
-    # plt.show()
+    ax4.grid(True, color='k')
+    ax4.plot(calculate_mov_avg(x_axis), linewidth=5, label='RTT')
+    ax4.plot(calculate_mov_avg(y_axis), linewidth=5, label='CPU')
+    ax4.set_title('CPU and RTT Utilization over Time')
+    ax4.set_ylabel('CPU and RTT')
+    ax4.set_xlabel('Time (seconds)')
+    ax4.legend()
+    plt.subplot(ax4)
 
 
 def plot_relative_frequency():
@@ -268,10 +246,9 @@ def plot_relative_frequency():
         else:
             explode.append(0)
 
-    fig2 = plt.ion()
-    fig2 = plt.pie(val, labels=keys, autopct='%.3f%%', shadow=True, explode=explode, colors=cols)
-    fig2 = plt.title('Relative Frequency')
-    fig2 = plt.pause(2)
+    ax5.pie(val, labels=keys, autopct='%.3f%%', shadow=True, explode=explode, colors=cols)
+    ax5.set_title('Relative Frequency')
+    plt.subplot(ax5)
 
 
 def get_hash(url):
