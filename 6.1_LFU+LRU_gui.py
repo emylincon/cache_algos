@@ -227,8 +227,6 @@ def plot_resource_util(x, y):
 
 
 def plot_relative_frequency():
-    fig2 = plt.figure('Relative Frequency')
-    fig2 = plt.clf()
     ret = hash_to_web()
 
     val = []
