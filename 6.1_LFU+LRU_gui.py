@@ -11,6 +11,7 @@ import random
 import time
 import psutil
 import ping_code as pc
+from drawnow import *
 from matplotlib import pyplot as plt
 import subprocess as sp
 import ast
@@ -187,18 +188,23 @@ def hash_to_web():
 
 
 def plot_graphs():
+    plot_resource_util()
+    plot_relative_frequency()
+    plot_changing_freq()
+    plot_local_cache_freq()
+    plot_performance()
+    fig.suptitle('Cache Performance Results')
+
+
+def cpu_rtt():
     host = server_ip
     prev_t = 0
     rtt = pc.verbose_ping(host)
     next_t = psutil.cpu_percent(percpu=False)
     delta = abs(prev_t - next_t)
     prev_t = next_t
-    plot_resource_util(rtt, delta)
-    plot_relative_frequency()
-    plot_changing_freq()
-    plot_local_cache_freq()
-    plot_performance()
-    plt.show()
+    x_axis.append(rtt)
+    y_axis.append(delta)
 
 
 def calculate_mov_avg(a1):
@@ -212,9 +218,7 @@ def calculate_mov_avg(a1):
     return ma1
 
 
-def plot_resource_util(x, y):
-    x_axis.append(x)
-    y_axis.append(y)
+def plot_resource_util():
     ax4.grid(True, color='k')
     ax4.plot(calculate_mov_avg(x_axis), linewidth=5, label='RTT')
     ax4.plot(calculate_mov_avg(y_axis), linewidth=5, label='CPU')
@@ -275,7 +279,8 @@ def calc_relative_freq(x):
         freq[x] += (len(freq) - 1) * delta
 
     update_changing_freq()
-    plot_graphs()
+    cpu_rtt()
+    drawnow(plot_graphs)
 
 
 def get_time():
