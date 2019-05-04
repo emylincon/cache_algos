@@ -691,7 +691,7 @@ def run_me():
     g = Figlet(font='bubble')
 
     print(g.renderText('MEC CACHING PROJECT'))
-    print(g.renderText('                      BY     EMEKA'))
+    print(g.renderText('                      BY     EMEKA '))
 
     while True:
         print('\n')
