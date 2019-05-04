@@ -478,7 +478,7 @@ def fetch_from_mec(hash_no, host_ip):
         update_local_database(hash_no)
         os.system(cmd)
         print('-----------------------------------')
-        print('Cache Hit from MEC')
+        print('========Cache Hit from MEC=========')
         print('-----------------------------------')
         MH += 1
         if r >= cache_size:
