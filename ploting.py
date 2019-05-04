@@ -21,7 +21,12 @@ def plt1():
     plt.subplot(ax1)
 
 
+def testing():
+    return r.randrange(20)
+
+
 def plt2():
+    #print(testing())
     x = list(range(10, 30))
     y = [r.randrange(i) for i in x]
     ax2.grid(True, color='k')
@@ -95,7 +100,7 @@ def plot_test():
 
 
 def draw_loop():
-    while True:
+    for i in range(10):
         drawnow(plot_test)
         time.sleep(3)
 
