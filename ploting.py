@@ -11,6 +11,8 @@ ax4 = fig.add_subplot(236)
 ax5 = fig.add_subplot(132)
 #ax6 = fig.add_subplot(313)
 
+color_code = ['r', 'g', 'c', 'b', 'm', 'y', 'grey', 'pink', 'brown', 'purple', 'orange', 'burlywood', 'lime', 'navy', 'aqua', 'teal', 'fuchsia', 'olive', 'maroon', 'silver']
+
 
 def plt1():
     x = list(range(10, 30))
@@ -80,7 +82,7 @@ def plot_performance():
     values = [H, M, (H + MH), re_use]
     ax1.set_xticks(ypos)
     ax1.set_xticklabels(name)
-    ax1.bar(ypos, values, align='center', color='silver')
+    ax1.bar(ypos, values, align='center', color=color_code[:4])
     ax1.set_title('Cache Performance')
     plt.subplot(ax1)
 
@@ -100,7 +102,7 @@ def plot_test():
 
 
 def draw_loop():
-    for i in range(10):
+    while True:
         drawnow(plot_test)
         time.sleep(3)
 
