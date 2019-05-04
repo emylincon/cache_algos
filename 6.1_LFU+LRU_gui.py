@@ -248,11 +248,12 @@ def plot_relative_frequency():
 
     val = []
     keys = []
-    cols = ['r', 'g', 'c', 'k', 'b', 'm', 'y']
+    cols = []
 
     for i in ret.items():
         val.append(i[1])
         keys.append(i[0].split('/')[1])
+        cols.append(hash_colour[i[0]])
 
     explode = []
     for i in val:
