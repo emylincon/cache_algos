@@ -146,9 +146,9 @@ def local_cache_frequency():
         cache_dic = {}   # {hash: relative frequency}
         for i in d:
             cache_dic[i] = freq[i]  # creates a dictionary and tags the hash with its relative frequency
-
+        '''
         plot_dic = {}   # {url: relative frequency}
-
+        
         for key in hash_dic:
             if hash_dic[key] not in cache_dic:
                 continue
@@ -157,11 +157,14 @@ def local_cache_frequency():
                 plot_dic[key] = rf  # converts the dictionary from hash: frequency to web: frequency
 
         return plot_dic
+        '''
+        return cache_dic
 
 
 def plot_local_cache_freq():
     global changing_freq
 
+    '''
     plot_dic = {}
 
     for key in hash_dic:
@@ -170,35 +173,21 @@ def plot_local_cache_freq():
         elif hash_dic[key] in changing_freq:
             rf = changing_freq[hash_dic[key]]
             plot_dic[key] = rf  # converts the dictionary from hash: frequency to web: frequency
+    '''
 
     ax3.grid(True, color='k')
     if local_cache_frequency() == 'no items':
         pass
     else:
-        for key in plot_dic.keys():
+        for key in changing_freq.keys():
             if key in local_cache_frequency():
-                ax3.plot(plot_dic[key], linewidth=5, label=key.split('/')[1], color=colour[key])
+                ax3.plot(changing_freq[key], linewidth=5, label=hash_web[key].split('/')[1], color=colour[key])
 
         ax3.set_title('Local Cache frequency Graph')
         ax3.set_ylabel('URL')
         ax3.set_xlabel('Time (seconds)')
         ax3.legend()
         plt.subplot(ax3)
-
-
-def hash_to_web():
-    global freq
-
-    plot_dic = {}
-
-    for key in hash_dic:
-        if hash_dic[key] not in freq:
-            continue
-        elif hash_dic[key] in freq:
-            rf = freq[hash_dic[key]]
-            plot_dic[key] = rf
-
-    return plot_dic
 
 
 def plot_graphs():
@@ -244,15 +233,16 @@ def plot_resource_util():
 
 
 def plot_relative_frequency():
-    ret = hash_to_web()
+    ret = freq
 
     val = []
     keys = []
-    cols = ['r', 'g', 'c', 'k', 'b', 'm', 'y']
+    cols = []
 
     for i in ret.items():
         val.append(i[1])
-        keys.append(i[0].split('/')[1])
+        keys.append(hash_web[i[0]].split('/')[1])
+        cols.append(hash_colour[i[0]])
 
     explode = []
     for i in val:
