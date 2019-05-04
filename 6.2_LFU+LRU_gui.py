@@ -97,20 +97,6 @@ def update_changing_freq():
 def plot_changing_freq():
     global changing_freq
 
-    '''
-    plot_dic = {}
-
-    for key in hash_dic:
-        if hash_dic[key] not in changing_freq:
-            continue
-        elif hash_dic[key] in changing_freq:
-            rf = changing_freq[hash_dic[key]]
-            plot_dic[key] = rf  # converts the dictionary from hash: frequency to web: frequency
-
-    ax2.grid(True, color='k')
-    for key in plot_dic.keys():
-        ax2.plot(plot_dic[key], linewidth=5, label=key.split('/')[1], color=colour[key])
-    '''
     ax2.grid(True, color='k')
     for key in changing_freq.keys():
         ax2.plot(changing_freq[key], linewidth=5, label=hash_web[key].split('/')[1], color=hash_colour[key])
@@ -146,34 +132,12 @@ def local_cache_frequency():
         cache_dic = {}   # {hash: relative frequency}
         for i in d:
             cache_dic[i] = freq[i]  # creates a dictionary and tags the hash with its relative frequency
-        '''
-        plot_dic = {}   # {url: relative frequency}
-        
-        for key in hash_dic:
-            if hash_dic[key] not in cache_dic:
-                continue
-            elif hash_dic[key] in cache_dic:
-                rf = cache_dic[hash_dic[key]]
-                plot_dic[key] = rf  # converts the dictionary from hash: frequency to web: frequency
 
-        return plot_dic
-        '''
         return cache_dic
 
 
 def plot_local_cache_freq():
     global changing_freq
-
-    '''
-    plot_dic = {}
-
-    for key in hash_dic:
-        if hash_dic[key] not in changing_freq:
-            continue
-        elif hash_dic[key] in changing_freq:
-            rf = changing_freq[hash_dic[key]]
-            plot_dic[key] = rf  # converts the dictionary from hash: frequency to web: frequency
-    '''
 
     ax3.grid(True, color='k')
     if local_cache_frequency() == 'no items':
