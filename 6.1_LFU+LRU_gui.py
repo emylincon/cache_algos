@@ -16,6 +16,7 @@ from matplotlib import pyplot as plt
 import subprocess as sp
 import ast
 from pyfiglet import Figlet
+from threading import Thread
 
 
 __author__ = 'Emmanuel'
@@ -280,7 +281,12 @@ def calc_relative_freq(x):
 
     update_changing_freq()
     cpu_rtt()
-    drawnow(plot_graphs)
+
+
+def plotting():
+    while True:
+        drawnow(plot_graphs)
+        time.sleep(2)
 
 
 def get_time():
@@ -721,14 +727,25 @@ def run_me():
                 fr.close()
                 time.sleep(3)
             '''
+            start_program()
 
-            for v in ref:
-                fr = open('/home/mec/temp/web_test.txt', 'r')
 
-                t = fr.readlines()
-                get_hash(t[v][0:-1])
-                fr.close()
-                time.sleep(1)
+def cache_loop():
+    for v in ref:
+        fr = open('/home/mec/temp/web_test.txt', 'r')
+
+        t = fr.readlines()
+        get_hash(t[v][0:-1])
+        fr.close()
+        time.sleep(1)
+
+
+def start_program():
+    h1 = Thread(target=cache_loop)
+    h1.start()
+    time.sleep(2)
+    h2 = Thread(target=plotting)
+    h2.start()
 
 
 def main():
