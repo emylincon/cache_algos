@@ -18,7 +18,7 @@ import ast
 from pyfiglet import Figlet
 
 
-__author__ = 'Emmanuel'
+__author__ = 'Emeka'
 cache_size = 4
 H = 0  # hit counter
 M = 0  # miss counter
