@@ -11,6 +11,7 @@ import time
 import psutil
 import ping_code as pc
 from threading import Thread
+from drawnow import *
 from matplotlib import pyplot as plt
 from pyfiglet import Figlet
 import subprocess as sp
@@ -30,8 +31,11 @@ re_use = 0
 # ref = [14, 14, 7, 0, 15, 15, 5, 18, 7, 14, 8, 17, 10, 14, 10, 16, 17, 12, 16, 0, 4, 10, 1, 12, 4, 5, 7, 6, 14, 19, 18, 7, 10, 19, 5, 13, 8, 14, 10, 16, 10, 0, 0, 13, 2, 4, 9, 17, 14, 10, 10, 5, 19, 11, 0, 16, 8, 10, 19, 8, 8, 18, 13, 16, 16, 10, 7, 11, 15, 6, 19, 7, 6, 1, 10, 15, 1, 14, 13, 4, 5, 5, 9, 2, 5, 6, 14, 15, 11, 15, 7, 0, 4, 7, 0, 12, 7, 10, 13, 6, 16, 7, 14, 17, 6, 0, 12, 11, 12, 15, 12, 16, 9, 7, 13, 12, 10, 11, 9, 4, 6, 2, 15, 15, 3, 7, 15, 19, 4, 7, 14, 14, 0, 12, 4, 13, 14, 6, 7, 16, 6, 4, 16, 3, 15, 15, 9, 1, 5, 7, 15, 17, 4, 1, 15, 17, 18, 17, 5, 0, 16, 11, 10, 14, 6, 18, 5, 4, 17, 1, 15, 4, 10, 19, 19, 2, 7, 4, 3, 8, 15, 1, 2, 9, 8, 10, 17, 1, 12, 3, 2, 11, 14, 19, 16, 19, 4, 6, 13, 12, 13, 12, 3, 10, 7, 13, 12, 12, 8, 3, 3, 4, 7, 5, 7, 2, 0, 16, 1, 2, 7, 12, 10, 8, 16, 3, 10, 17, 11, 8, 10, 1, 18, 10, 0, 11, 12, 18, 8, 13, 6, 19, 0, 12, 18, 10, 9, 8, 10, 4, 1, 10, 15, 16, 11, 12, 6, 0, 12, 14, 18, 7, 1, 12, 4, 19, 0, 17, 3, 17, 7, 15, 3, 14, 6, 12, 6, 12, 19, 0, 10, 17, 14, 5, 9, 17, 18, 14, 6, 19, 9, 12, 12, 7, 0, 6, 11, 1, 7, 15, 4, 9, 14, 18, 10, 5, 15, 18, 11, 7, 19, 4, 11, 13, 4, 12, 1, 5, 5, 7, 9, 4, 18, 14, 4, 11, 5, 13, 5, 4, 13, 15, 15, 0, 1, 1, 14, 14, 6, 18, 9, 14, 15, 1, 5, 3, 17, 6, 0, 8, 9, 13, 13, 1, 4, 7, 10, 0, 12, 16, 18, 3, 1, 1, 18, 6, 1, 10, 8, 13, 16, 6, 15, 8, 2, 1, 10, 4, 7, 11, 13, 7, 9, 12, 9, 11, 10, 8, 11, 0, 3, 3, 14, 8, 15, 1, 15, 11, 19, 15, 14, 13, 5, 1, 16, 3, 17, 18, 16, 15, 13, 0, 11, 6, 10, 18, 16, 18, 6, 7, 16, 13, 6, 2, 0, 6, 6, 2, 9, 4, 12, 9, 10, 11, 18, 6, 11, 19, 14, 9, 9, 5, 8, 6, 1, 6, 19, 15, 7, 1, 9, 5, 13, 6, 12, 13, 19, 8, 14, 9, 0, 13, 8, 7, 13, 11, 11, 12, 8, 9, 3, 12, 7, 1, 4, 8, 6, 5, 17, 7, 19, 4, 18, 16, 4, 9, 8, 9, 4, 6, 7, 19, 18, 4, 12, 13, 11, 4, 19, 6]
 ref = [14, 14, 7, 15, 15, 15, 5, 18, 7, 14, 8, 7, 10, 14, 10, 16, 7, 16, 12, 0, 4, 10, 1, 12, 4, 5, 7, 6, 14, 7, 18, 7, 10, 19, 5, 13, 8, 14, 10, 16, 10, 0, 0, 13, 7, 4, 9, 17, 14, 10, 10, 5, 19, 11, 0, 16, 8, 10, 19, 8, 8, 18, 13, 16, 16, 10, 7, 11, 15, 6, 7, 7, 6, 1, 10, 15, 1, 14, 13, 4, 5, 5, 9, 2, 5, 6, 6, 15, 11, 15, 7, 0, 4, 7, 0, 12, 7, 10, 13, 6, 16, 7, 14, 17, 6, 0, 12, 11, 12, 15, 12, 16, 9, 7, 13, 12, 10, 11, 9, 4, 6, 2, 15, 15, 7, 7, 15, 19, 4, 7, 14, 14, 0, 12, 4, 13, 14, 6, 7, 16, 6, 4, 16, 6, 15, 15, 9, 1, 5, 7, 7, 17, 4, 1, 15, 17, 18, 17, 6, 0, 6, 11, 10, 14, 6, 18, 5, 4, 17, 1, 15, 4, 10, 19, 19, 2, 7, 4, 7, 8, 15, 1, 2, 9, 8, 10, 17, 6, 6, 3, 6, 11, 14, 19, 16, 19, 4, 6, 13, 12, 13, 12, 3, 10, 7, 13, 12, 12, 8, 7, 7, 4, 7, 5, 7, 2, 0, 16, 1, 2, 7, 12, 10, 8, 16, 3, 10, 17, 11, 8, 10, 1, 18, 10, 10, 11, 12, 18, 8, 13, 6, 19, 0, 12, 18, 10, 9, 8, 10, 4, 1, 10, 15, 16, 11, 12, 6, 0, 12, 14, 18, 7, 1, 12, 4, 19, 0, 17, 3, 17, 7, 15, 3, 14, 6, 12, 6, 12, 19, 0, 10, 17, 14, 5, 9, 17, 18, 14, 6, 19, 9, 12, 12, 7, 0, 6, 11, 1, 7, 15, 4, 9, 14, 18, 10, 5, 15, 18, 11, 7, 19, 4, 11, 13, 4, 12, 1, 5, 5, 7, 9, 4, 18, 14, 4, 11, 5, 13, 5, 4, 13, 15, 15, 0, 1, 1, 14, 14, 6, 6, 9, 14, 15, 15, 5, 3, 15, 6, 0, 8, 13, 13, 13, 1, 4, 7, 10, 0, 12, 16, 18, 3, 1, 1, 18, 6, 1, 10, 8, 13, 16, 6, 15, 8, 15, 1, 10, 4, 7, 11, 13, 7, 9, 12, 9, 11, 10, 8, 11, 0, 11, 3, 14, 8, 15, 1, 15, 11, 19, 15, 14, 13, 5, 1, 16, 3, 17, 18, 16, 15, 13, 0, 11, 6, 10, 18, 16, 18, 6, 7, 16, 13, 6, 2, 0, 6, 6, 6, 9, 4, 12, 9, 10, 11, 18, 6, 11, 19, 14, 9, 9, 5, 8, 6, 1, 6, 19, 15, 7, 1, 9, 5, 13, 6, 12, 13, 19, 8, 14, 9, 0, 13, 8, 7, 13, 11, 11, 12, 8, 9, 3, 12, 7, 1, 4, 8, 6, 5, 17, 7, 19, 4, 18, 16, 4, 9, 8, 9, 4, 6, 7, 19, 18, 4, 12, 13, 11, 4, 19, 6]
 
+color_code = ['r', 'g', 'c', 'b', 'm', 'y', 'grey', 'pink', 'brown', 'purple', 'orange', 'burlywood', 'lime', 'navy', 'aqua', 'teal', 'fuchsia', 'olive', 'maroon', 'silver']
+
 
 freq = {}
+changing_freq = {}  # {hash: frequency}
 hash_times = {}
 window = []
 window_size = cache_size * 8
@@ -39,17 +43,31 @@ window_size = cache_size * 8
 x_axis = []
 y_axis = []
 
+fig = plt.figure()
+ax1 = fig.add_subplot(231)
+ax2 = fig.add_subplot(233)
+ax3 = fig.add_subplot(234)
+ax4 = fig.add_subplot(236)
+ax5 = fig.add_subplot(132)
+
 
 def make_hash_dic(host_ip, n):
+    global hash_colour
+    global hash_web
+
     h_dic = {}   # {url: hash}
-    kolour = ['r', 'g', 'c', 'k', 'b', 'm', 'y']
-    col = {}
+    kolour = color_code[:n]
+    col = {}     # {url: colour}
+    hash_colour = {}     # {hash: colour}
+    hash_web = {}   # {hash: url}
     for i in range(1, n+1):
         url = '{}/{}.html'.format(host_ip, i)
         hash_me = 'get {} HTTP/1.0'.format(url)
         y = str.encode(hash_me)
         ha = hashlib.md5(y)
         hash_no = ha.hexdigest()
+        hash_colour[hash_no] = kolour[i-1]
+        hash_web[hash_no] = url
         h_dic[url] = hash_no
         col[url] = kolour[i-1]
     return [h_dic, col]
@@ -61,37 +79,104 @@ def plot_performance():
     global MH
     global re_use
 
-    fig5 = plt.figure('Cache Performance')
-
-    fig5 = plt.clf()
-
-    fig5 = plt.ion()
-    name = ['Hits', 'Misses', 'Co-operative-Hits', 'Algo use']
+    name = ['Hit', 'Miss', 'CH', 'AU']
     ypos = ([0, 1, 2, 3])
     values = [H, M, (H + MH), re_use]
+    ax1.set_xticks(ypos)
+    ax1.set_xticklabels(name)
+    ax1.bar(ypos, values, align='center', color='m')
+    ax1.set_title('Cache Performance')
+    plt.subplot(ax1)
 
-    fig5 = plt.xticks(ypos, name)
-    fig5 = plt.bar(ypos, values, align='center', color='m')
-    fig5 = plt.title('Cache Performance')
 
-    fig5 = plt.ylabel('values')
+def local_cache_frequency():
+    ip = ip_address()
 
-    fig5 = plt.pause(2)
+    con = sqlite3.connect('/home/mec/cache.db')
+    cur = con.cursor()
+    cur.execute("select Hash from CacheTable where Host_ip ='" + ip + "'")
+    data = cur.fetchall()
+    '''
+    data format
+    [('7e7ea8d98195d1fcf6abe4f77e56730e',), ('26ff04f8463191809dcd9e8605bb952a',), ('d37269610dffb86e4925864b110e4d4e',)]
+    '''
+    d = []
+    if len(data) == 0:
+        con.close()
+        return 'no items'
+        pass
+    else:
+        for i in data:
+            d.append(i[
+                         0])  # cleaning data to d = ['7e7ea8d98195d1fcf6abe4f77e56730e', '26ff04f8463191809dcd9e8605bb952a', 'd37269610dffb86e4925864b110e4d4e']
+        con.close()
+        cache_dic = {}   # {hash: relative frequency}
+        for i in d:
+            cache_dic[i] = freq[i]  # creates a dictionary and tags the hash with its relative frequency
+
+        return cache_dic
+
+
+def plot_local_cache_freq():
+    global changing_freq
+
+    ax3.grid(True, color='k')
+    if local_cache_frequency() == 'no items':
+        pass
+    else:
+        for key in changing_freq.keys():
+            if key in local_cache_frequency():
+                ax3.plot(changing_freq[key], linewidth=5, label=hash_web[key].split('/')[1], color=hash_colour[key])
+
+        ax3.set_title('Local Cache frequency Graph')
+        ax3.set_ylabel('URL')
+        ax3.set_xlabel('Time (seconds)')
+        ax3.legend()
+        plt.subplot(ax3)
+
+
+def plot_changing_freq():
+    global changing_freq
+
+    ax2.grid(True, color='k')
+    for key in changing_freq.keys():
+        ax2.plot(changing_freq[key], linewidth=5, label=hash_web[key].split('/')[1], color=hash_colour[key])
+
+    ax2.set_title('Changing frequency Graph')
+    ax2.set_ylabel('URL')
+    ax2.set_xlabel('Time (seconds)')
+    ax2.legend()
+    plt.subplot(ax2)
 
 
 def plot_graphs():
+    plot_resource_util()
+    plot_relative_frequency()
+    plot_changing_freq()
+    plot_local_cache_freq()
+    plot_performance()
+    fig.suptitle('Cache Performance Results')
+
+
+def cpu_rtt():
     host = server_ip
     prev_t = 0
     rtt = pc.verbose_ping(host)
     next_t = psutil.cpu_percent(percpu=False)
     delta = abs(prev_t - next_t)
     prev_t = next_t
-    plot_resource_util(rtt, delta)
-#    plot_relative_frequency()
-#    plot_changing_freq()
-#    plot_local_cache_freq()
-    plot_performance()
-    plt.show()
+    x_axis.append(rtt)
+    y_axis.append(delta)
+
+
+def update_changing_freq():
+    for key in freq.keys():
+        x = key
+        y = freq[key]
+        if x in changing_freq.keys():
+            changing_freq[x].append(y)
+        else:
+            changing_freq[x] = [y]
 
 
 def calculate_mov_avg(a1):
@@ -106,21 +191,52 @@ def calculate_mov_avg(a1):
     return ma1
 
 
-def plot_resource_util(x, y):
-    fig1 = plt.figure('Resource Utilization')
+def plot_resource_util():
+    ax4.grid(True, color='k')
+    ax4.plot(calculate_mov_avg(x_axis), linewidth=5, label='RTT')
+    ax4.plot(calculate_mov_avg(y_axis), linewidth=5, label='CPU')
+    ax4.set_title('CPU and RTT Utilization over Time')
+    ax4.set_ylabel('CPU and RTT')
+    ax4.set_xlabel('Time (seconds)')
+    ax4.legend()
+    plt.subplot(ax4)
 
-    fig1 = plt.clf()
-    x_axis.append(x)
-    y_axis.append(y)
-    fig1 = plt.ion()
-    fig1 = plt.grid(True, color='k')
-    fig1 = plt.plot(calculate_mov_avg(x_axis), linewidth=5, label='RTT')
-    fig1 = plt.plot(calculate_mov_avg(y_axis), linewidth=5, label='CPU')
-    fig1 = plt.title('CPU and RTT Utilization over Time')
-    fig1 = plt.ylabel('CPU and RTT')
-    fig1 = plt.xlabel('Time (seconds)')
-    fig1 = plt.legend()
-    fig1 = plt.pause(2)
+
+def plot_relative_frequency():
+    ret = freq
+
+    val = []
+    keys = []
+    cols = []
+
+    for i in ret.items():
+        val.append(i[1])
+        keys.append(hash_web[i[0]].split('/')[1])
+        cols.append(hash_colour[i[0]])
+
+    explode = []
+    for i in val:
+        if i == max(val):
+            explode.append(0.1)
+        else:
+            explode.append(0)
+
+    ax5.pie(val, labels=keys, autopct='%.3f%%', shadow=True, explode=explode, colors=cols)
+    ax5.set_title('Relative Frequency')
+    plt.subplot(ax5)
+
+
+def calc_relative_freq(x):
+    global freq
+
+    if x in freq:
+        freq[x] += 1
+    else:
+        freq[x] = 1
+
+    update_changing_freq()
+    cpu_rtt()
+    drawnow(plot_graphs)
 
 
 def get_hash(url):
@@ -132,17 +248,6 @@ def get_hash(url):
     calc_relative_freq(hash_no)  # frequency used for mec caching eviction
     update_hash_time(hash_no)    # time update for opr prediction
     check_cache(hash_no, url)
-
-
-def calc_relative_freq(x):
-    global freq
-
-    if x in freq:
-        freq[x] += 1
-    else:
-        freq[x] = 1
-
-    plot_graphs()
 
 
 def update_hash_time(x):
@@ -624,12 +729,11 @@ def run_me():
     for i in range(1, n+1):
         cmd = 'echo "{}/{}.html" >> /home/mec/temp/web_test.txt'.format(server_ip, i)
         os.system(cmd)
-    '''
+
     result = make_hash_dic(server_ip, n)
     hash_dic = result[0]
     colour = result[1]
     os.system('clear')
-    '''
 
     print("getting ready to start. . .")
     time.sleep(5)
