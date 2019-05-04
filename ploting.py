@@ -80,7 +80,7 @@ def plot_performance():
     values = [H, M, (H + MH), re_use]
     ax1.set_xticks(ypos)
     ax1.set_xticklabels(name)
-    ax1.bar(ypos, values, align='center', color='m')
+    ax1.bar(ypos, values, align='center', color='silver')
     ax1.set_title('Cache Performance')
     plt.subplot(ax1)
 
