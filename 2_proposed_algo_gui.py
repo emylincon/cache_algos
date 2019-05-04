@@ -9,7 +9,6 @@ from time import gmtime, strftime
 import random
 import time
 import psutil
-from drawnow import *
 import ping_code as pc
 from threading import Thread
 from matplotlib import pyplot as plt
