@@ -65,7 +65,7 @@ def plot_performance():
     global MH
     global re_use
 
-    name = ['Hits', 'Misses', 'Co-operative-Hits', 'Algo use']
+    name = ['Hit', 'Miss', 'CH', 'AU']
     ypos = ([0, 1, 2, 3])
     values = [H, M, (H + MH), re_use]
     ax1.set_xticks(ypos)
@@ -99,7 +99,7 @@ def plot_changing_freq():
 
     ax2.grid(True, color='k')
     for key in plot_dic.keys():
-        ax2.plot(plot_dic[key], linewidth=5, label=key, color=colour[key])
+        ax2.plot(plot_dic[key], linewidth=5, label=key.split('/')[1], color=colour[key])
 
     ax2.set_title('Changing frequency Graph')
     ax2.set_ylabel('URL')
@@ -163,7 +163,7 @@ def plot_local_cache_freq():
     else:
         for key in plot_dic.keys():
             if key in local_cache_frequency():
-                ax3.plot(plot_dic[key], linewidth=5, label=key, color=colour[key])
+                ax3.plot(plot_dic[key], linewidth=5, label=key.split('/')[1], color=colour[key])
 
         ax3.set_title('Local Cache frequency Graph')
         ax3.set_ylabel('URL')
@@ -238,7 +238,7 @@ def plot_relative_frequency():
 
     for i in ret.items():
         val.append(i[1])
-        keys.append(i[0])
+        keys.append(i[0].split('/')[1])
 
     explode = []
     for i in val:
