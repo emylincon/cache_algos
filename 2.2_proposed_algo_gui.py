@@ -19,7 +19,7 @@ import ast
 import numpy
 
 
-__author__ = 'Emmanuel'
+__author__ = 'Emeka'
 # mec_list = ['10.1.1.1', '10.2.2.2', '10.3.3.3']
 
 cache_size = 4
