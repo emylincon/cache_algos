@@ -689,9 +689,9 @@ def message():
 
 def receive_message():
     while True:
-        if len(hosts) == mec_no:
-            print('MEC Details: ', hosts)
-            del hosts[message()]
+        if len(mec_list) == mec_no:
+            print('MEC Details: ', mec_list)
+            del mec_list[message()]
             break
         data, address = sock.recvfrom(1024)
 
