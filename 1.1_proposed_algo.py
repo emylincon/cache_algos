@@ -11,6 +11,7 @@ import ast
 from threading import Thread
 from pyfiglet import Figlet
 import numpy
+import struct
 
 
 __author__ = 'Emmanuel'
@@ -32,6 +33,19 @@ hash_times = {}  # {hash:[t1, t2], hash2:[t1,t2]}
 window = []
 window_size = cache_size * 8
 
+mec_list = {}  # {'mec1': ip_address, 'mec3': 'ip_address'}
+multicast_group = '224.3.29.71'
+server_address = ('', 10000)
+
+# Create the socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# Bind to the server address
+sock.bind(server_address)
+# Tell the operating system to add the socket to the multicast group
+# on all interfaces.
+group = socket.inet_aton(multicast_group)
+mreq = struct.pack('4sL', group, socket.INADDR_ANY)
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 def get_hash(url):
     hash_me = 'get {} HTTP/1.0'.format(url)
@@ -540,9 +554,9 @@ def message():
 
 def receive_message():
     while True:
-        if len(hosts) == mec_no:
-            print('MEC Details: ', hosts)
-            del hosts[message()]
+        if len(mec_list) == mec_no:
+            print('MEC Details: ', mec_list)
+            del mec_list[message()]
             break
         data, address = sock.recvfrom(1024)
 
@@ -579,7 +593,6 @@ def initialization():
         exit(0)
 
 
-
 def run_me():
     global mec_list  # {'mec1': ip_address, 'mec3': 'ip_address'}
     global request_no
@@ -593,8 +606,8 @@ def run_me():
         os.system(cmd)
     os.system('clear')
     print("getting ready to start. . .")
-    getting_ready()
-    time.sleep(3)
+    initialization()
+    time.sleep(6)
     os.system('clear')
     g = Figlet(font='bubble')
 
