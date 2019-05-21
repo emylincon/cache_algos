@@ -15,7 +15,6 @@ from drawnow import *
 from matplotlib import pyplot as plt
 from pyfiglet import Figlet
 import subprocess as sp
-import ast
 import numpy
 import struct
 
@@ -768,13 +767,7 @@ def run_me():
             os.system(cmd)
             break
         else:
-            mec_str = ''
-            tr = open('/home/mec/temp/mec_list.txt', 'r')
-            tp = tr.readlines()
-            for i in tp:
-                mec_str += i[0:-1] + ','
-            mec = '{' + mec_str[0:-1] + '}'
-            mec_list = ast.literal_eval(mec)
+
             '''
             for i in range(30):
                 fr = open('/home/mec/temp/web_test.txt', 'r')

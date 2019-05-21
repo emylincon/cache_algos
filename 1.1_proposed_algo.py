@@ -7,7 +7,6 @@ from time import gmtime, strftime
 import random
 import time
 import subprocess as sp
-import ast
 from threading import Thread
 from pyfiglet import Figlet
 import numpy
@@ -624,13 +623,6 @@ def run_me():
             os.system('rm /home/mec/temp/*')
             break
         else:
-            mec_str = ''
-            tr = open('/home/mec/temp/mec_list.txt', 'r')
-            tp = tr.readlines()
-            for i in tp:
-                mec_str += i[0:-1] + ','
-            mec = '{' + mec_str[0:-1] + '}'
-            mec_list = ast.literal_eval(mec)
 
             '''
             for i in range(30):
