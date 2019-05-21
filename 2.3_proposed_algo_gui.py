@@ -17,6 +17,7 @@ from pyfiglet import Figlet
 import subprocess as sp
 import ast
 import numpy
+import struct
 
 
 __author__ = 'Emeka'
@@ -47,6 +48,21 @@ fig = plt.figure()
 ax1 = fig.add_subplot(131)
 ax2 = fig.add_subplot(132)
 ax3 = fig.add_subplot(133)
+
+hosts = {}  # {hostname: ip}
+mec_list = {}  # {'mec1': ip_address, 'mec3': 'ip_address'}
+multicast_group = '224.3.29.71'
+server_address = ('', 10000)
+
+# Create the socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# Bind to the server address
+sock.bind(server_address)
+# Tell the operating system to add the socket to the multicast group
+# on all interfaces.
+group = socket.inet_aton(multicast_group)
+mreq = struct.pack('4sL', group, socket.INADDR_ANY)
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 
 def make_hash_dic(host_ip, n):
@@ -651,9 +667,69 @@ def getting_ready():
             print('make sure ssh is running on all MEC')
 
 
+def send_message(mg):
+    _multicast_group = ('224.3.29.71', 10000)
+    try:
+
+        # Send data to the multicast group
+        if mg == 'hello':
+            smg = mg + ' ' + message()
+            sock.sendto(str.encode(smg), _multicast_group)
+            print('\nHello message sent')
+
+    except Exception as e:
+        print(e)
+
+
+def message():
+    cmd = ['cat /etc/hostname']
+    hostname = str(sp.check_output(cmd, shell=True), 'utf-8')[0:-1]
+    return hostname
+
+
+def receive_message():
+    while True:
+        if len(hosts) == mec_no:
+            print('MEC Details: ', hosts)
+            del hosts[message()]
+            break
+        data, address = sock.recvfrom(1024)
+
+        if data.decode()[:5] == 'hello':
+            mec_list[data.decode()[6:]] = address[0]
+
+
+def initialization():
+    global mec_no
+    global mec_me  # {'hostname': <hostname>, 'ip': <ip>}
+
+    my_ip = ip_address()
+
+    cmd = ['cat /etc/hostname | cut -c 1-4']
+    hostname = str(sp.check_output(cmd, shell=True), 'utf-8')[0:-1]
+    print('hostname = {}'.format(hostname))
+
+    mec_me = {'hostname': hostname, 'ip': my_ip}
+
+    try:
+        mec_no = int(input('Number of MECs: ').strip())
+        print('\nCompiling MEC Details')
+        h1 = Thread(target=receive_message)
+        h1.start()
+        while True:
+            b = input('Send Hello Message (Y/N): ').strip().lower()
+            if b == 'y':
+                send_message('hello')
+                break
+            else:
+                print('\nPlease Type "y" to send Hello message\n')
+    except KeyboardInterrupt:
+        print('\nProgramme Terminated')
+        exit(0)
+
+
 def run_me():
     global hash_dic
-    global mec_list  # {'mec1': ip_address, 'mec3': 'ip_address'}
     global server_ip
     global request_no
     global colour
@@ -672,8 +748,8 @@ def run_me():
     os.system('clear')
 
     print("getting ready to start. . .")
-    time.sleep(5)
-    getting_ready()
+    initialization()
+    time.sleep(6)
     os.system('clear')
     g = Figlet(font='bubble')
 
