@@ -554,7 +554,7 @@ def message():
 def receive_message():
     while True:
         if len(mec_list) == mec_no:
-            print('MEC Details: ', mec_list)
+            # print('MEC Details: ', mec_list)
             del mec_list[message()]
             break
         data, address = sock.recvfrom(1024)
